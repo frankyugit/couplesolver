@@ -1,0 +1,6 @@
+﻿  main.cpp
+c:\users\frank\documents\visual studio 2015\projects\coupledsolver\coupledsolver\main.cpp(182): warning C4018: '<': signed/unsigned mismatch
+c:\users\frank\documents\visual studio 2015\projects\coupledsolver\coupledsolver\main.cpp(192): warning C4018: '<': signed/unsigned mismatch
+c:\users\frank\documents\visual studio 2015\projects\coupledsolver\coupledsolver\main.cpp(204): warning C4018: '<': signed/unsigned mismatch
+  coupledsolver.vcxproj -> C:\Users\frank\Documents\Visual Studio 2015\Projects\coupledsolver\x64\Debug\coupledsolver.exe
+  coupledsolver.vcxproj -> C:\Users\frank\Documents\Visual Studio 2015\Projects\coupledsolver\x64\Debug\coupledsolver.pdb (Partial PDB)
