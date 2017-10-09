@@ -27,6 +27,10 @@ VTK_MODULE_INIT(vtkInteractionStyle);
 #include <vtkStructuredGridGeometryFilter.h>
 #include <vtkXMLPolyDataWriter.h>
 #include <vtkXMLStructuredGridWriter.h>
+
+#include <vtkPolyDataMapper.h>
+#include <vtkStructuredGridWriter.h>
+#include <vtkStructuredGridGeometryFilter.h>
 using namespace std;
 
 class Point
@@ -153,6 +157,7 @@ class Mesh
 public:
 	Mesh(string meshfile);
 	void render();
+	void writeVTK();
 	
 private:
 	int mNcell_;
@@ -245,33 +250,15 @@ void Mesh::render()
 
 	structuredGrid->Modified();
 
-//	unsigned int gridSize = 8;
-//	unsigned int counter = 0;
-//	// Create a 5x5 grid of points
-//	for (unsigned int j = 0; j < gridSize; j++)
-//	{
-//		for (unsigned int i = 0; i < gridSize; i++)
-//		{
-//			if (i == 3 && j == 3) // Make one point higher than the rest
-//			{
-//				points->InsertNextPoint(i, j, 2);
-//				std::cout << "The different point is number " << counter << std::endl;
-//			}
-//			else
-//			{
-//				points->InsertNextPoint(i, j, 0); // Make most of the points the same height
-//			}
-//			counter++;
-//		}
-//}
-//
-//	// Specify the dimensions of the grid
-//	structuredGrid->SetDimensions(gridSize, gridSize, 1);
-//
-//	structuredGrid->SetPoints(points);
-//
-//	structuredGrid->BlankPoint(27);
-//	structuredGrid->Modified();
+	vtkSmartPointer<vtkStructuredGridWriter> writer =
+		vtkSmartPointer<vtkStructuredGridWriter>::New();
+	writer->SetFileName("output.vtk");
+#if VTK_MAJOR_VERSION <= 5
+	writer->SetInput(structuredGrid);
+#else
+	writer->SetInputData(structuredGrid);
+#endif
+	writer->Write();
 
 	// Create a mapper and actor
 	vtkSmartPointer<vtkDataSetMapper> gridMapper =
@@ -307,6 +294,26 @@ void Mesh::render()
 	renderWindowInteractor->Start();
 
 }
+
+void Mesh::writeVTK()
+{
+
+}
+
+class Solver
+{
+public:
+	Solver(Mesh m);
+
+private:
+	Mesh solMesh_;
+};
+
+Solver::Solver(Mesh m)
+	:solMesh_(m)
+{}
+
+
 
 
 int main(int argc, char * argv[])
@@ -346,5 +353,6 @@ int main(int argc, char * argv[])
 
 
 	cin.get();
+
 	return 0;
 }
